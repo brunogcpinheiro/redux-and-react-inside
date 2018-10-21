@@ -2,6 +2,7 @@
 
 <head>
 	<title>Udacity Todos Goals</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.1/redux.min.js"></script>
 	<meta charset="UTF-8" />
 </head>
 
@@ -24,33 +25,6 @@
 		function generateId() {
 			return Math.random().toString(36).substring(2)
 				+ (new Date()).getTime().toString(36);
-		}
-
-		// LIBRARY CODE
-		function createStore(reducer) {
-			let state;
-
-			let listeners = [];
-
-			const getState = () => state;
-
-			const subscribe = listener => {
-				listeners.push(listener);
-				return () => {
-					listeners = listeners.filter(l => l !== listener);
-				};
-			};
-
-			const dispatch = action => {
-				state = reducer(state, action);
-				listeners.forEach(listener => listener());
-			};
-
-			return {
-				getState,
-				subscribe,
-				dispatch
-			};
 		}
 
 		// APP CODE
@@ -131,7 +105,7 @@
 			};
 		}
 
-		const store = createStore(rootReducer);
+		const store = Redux.createStore(rootReducer);
 
 		store.subscribe(() => {
 			//console.log("The new state is: ", store.getState());
